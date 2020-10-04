@@ -49,7 +49,11 @@ defmodule Radio.MixProject do
       {:nerves_pack, "~> 0.4.0", targets: @all_targets},
 
       # Dependencies for specific targets
-      {:hifiberry_rpi0, path: "../hifiberry_rpi0", runtime: false, targets: :hifiberry_rpi0}
+      {:hifiberry_rpi0,
+       path: "../hifiberry_rpi0",
+       runtime: false,
+       targets: :hifiberry_rpi0,
+       nerves: [compile: true]}
     ]
   end
 
