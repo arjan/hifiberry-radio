@@ -12,9 +12,10 @@ defmodule Radio.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Radio.PubSub},
       # Start the Endpoint (http/https)
-      RadioWeb.Endpoint
+      RadioWeb.Endpoint,
       # Start a worker by calling: Radio.Worker.start_link(arg)
       # {Radio.Worker, arg}
+      Radio.Mpd
     ]
 
     opts = [strategy: :one_for_one, name: Radio.Supervisor]

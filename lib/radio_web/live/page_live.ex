@@ -1,8 +1,21 @@
 defmodule RadioWeb.PageLive do
   use RadioWeb, :live_view
 
+  defp defaults(socket) do
+    socket
+    |> assign(:current_song, %{})
+    |> assign(:status, %Paracusia.PlayerState.Status{})
+  end
+
   @impl true
   def mount(_params, _session, socket) do
+    socket = defaults(socket)
+
+    if connected?(socket) do
+      :timer.send_interval(1000, :poll)
+      Paracusia.PlayerState.subscribe(self())
+    end
+
     {:ok, assign(socket, query: "", results: %{})}
   end
 
@@ -23,6 +36,25 @@ defmodule RadioWeb.PageLive do
          |> put_flash(:error, "No dependencies found matching \"#{query}\"")
          |> assign(results: %{}, query: query)}
     end
+  end
+
+  @impl true
+  def handle_info(:poll, socket) do
+    {:ok, status} = Paracusia.MpdClient.Status.status()
+    {:ok, current_song} = Paracusia.MpdClient.Status.current_song()
+
+    socket =
+      socket
+      |> assign(:current_song, current_song)
+      |> assign(:status, status)
+
+    {:noreply, socket}
+  end
+
+  def handle_info(msg, socket) do
+    IO.inspect(msg, label: "msg")
+
+    {:noreply, socket}
   end
 
   defp search(query) do

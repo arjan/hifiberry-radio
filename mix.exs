@@ -35,7 +35,7 @@ defmodule Radio.MixProject do
   def application do
     [
       mod: {Radio.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -48,6 +48,9 @@ defmodule Radio.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:paracusia, path: "../../paracusia"},
+      {:porcelain, "~> 2.0"},
+
       # Dependencies for all targets
       {:nerves, "~> 1.6.3", runtime: false},
       {:phoenix_live_view, "~> 0.14.6"},

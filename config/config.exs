@@ -33,9 +33,11 @@ config :phoenix, :json_library, Jason
 
 config :logger, backends: [RingLogger]
 
-if Mix.target() != :host do
-  import_config "target.exs"
-end
+import_config "#{Mix.target()}.exs"
 
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :paracusia,
+  retry_after: 1000,
+  max_retry_attempts: 1000
