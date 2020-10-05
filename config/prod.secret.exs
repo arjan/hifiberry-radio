@@ -19,5 +19,3 @@ config :radio, RadioWeb.Endpoint,
   secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)
-
-config :radio, RadioWeb.Endpoint, server: true
