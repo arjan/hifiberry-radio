@@ -51,6 +51,7 @@ defmodule Radio.MixProject do
       {:paracusia, path: "../../paracusia"},
       {:porcelain, "~> 2.0"},
       {:observer_cli, "~> 1.5"},
+      {:circuits_uart, "~> 1.3"},
 
       # Dependencies for all targets
       {:nerves, "~> 1.6.3", runtime: false},

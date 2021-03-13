@@ -10,10 +10,18 @@ defmodule Radio.Mpd do
   # Server callbacks
   @impl true
   def init(_arg) do
-    {:ok, start_server() |> IO.inspect(label: "p")}
+    {:ok, start_server() |> IO.inspect(label: "p"), 5000}
   end
 
   @impl true
+  def handle_info(:timeout, state) do
+    Paracusia.MpdClient.Queue.clear()
+    Paracusia.MpdClient.Playlists.load("Arris")
+    Paracusia.MpdClient.Playback.play()
+
+    {:noreply, state}
+  end
+
   def handle_info(msg, state) do
     IO.inspect(msg, label: "msg")
     {:noreply, state}
